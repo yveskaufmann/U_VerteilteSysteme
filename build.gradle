@@ -1,0 +1,42 @@
+subprojects {
+    
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    
+    sourceCompatibility = 1.8
+    version = '1.0'
+    
+    eclipse {
+        classpath {
+           downloadSources=true
+           downloadJavadoc=true
+        }
+    }
+    
+    idea {
+        module {
+            downloadJavadoc=true
+            downloadSources=true    
+        }
+    }
+    
+    repositories {
+       maven { url "http://repo.springsource.org/libs-release" }
+       mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.springframework.shell:spring-shell:1.1.0.RELEASE'
+        compile 'org.apache.commons:commons-lang3:3.3.2'
+        compile 'log4j:log4j:1.2.17'
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.mockito:mockito-core:2.0.7-beta'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+

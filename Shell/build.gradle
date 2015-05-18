@@ -1,0 +1,12 @@
+apply plugin: 'application'
+
+mainClassName="de.htw.vs.Shell"
+
+dependencies {
+    runtime project(':DNSClient')
+    runtime project(':Server')
+}
+
+run {
+    standardInput = System.in
+}
