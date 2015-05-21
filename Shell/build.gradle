@@ -10,3 +10,4 @@ dependencies {
 run {
     standardInput = System.in
 }
+	
