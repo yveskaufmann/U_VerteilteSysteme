@@ -28,8 +28,8 @@ public class DNSClient {
 	 * @return a string which contains the IP address of the host.
 	 * @throws UnknownHostException if no IP address for the host could be found.
 	 */
-	public String getAddresseByHost(String host, boolean includeHost) throws UnknownHostException {
-		return getAllAddreessesByHost(host, includeHost).get(0);
+	public String getAddressByHost(String host, boolean includeHost) throws UnknownHostException {
+		return getAllAddressesByHost(host, includeHost).get(0);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class DNSClient {
 	 * @return a list of all the IP addresses for a given host name.
 	 * @throws UnknownHostException if no IP address for the host could be found.
 	 */
-	public List<String> getAllAddreessesByHost(String host, boolean includeHost) throws UnknownHostException {
+	public List<String> getAllAddressesByHost(String host, boolean includeHost) throws UnknownHostException {
 		InetAddress[] addresses = InetAddress.getAllByName(host);
 			
 		return Arrays.stream(addresses)

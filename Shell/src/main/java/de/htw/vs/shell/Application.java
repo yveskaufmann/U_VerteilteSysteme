@@ -64,7 +64,7 @@ public class Application {
 	
 	private static void runSpringShellWithoutInternalCommands(String[] args) {
 		try {
-			Bootstrap.main(ArrayUtils.addAll(args, new String[] {"--disableInternalCommands"}));
+			Bootstrap.main(ArrayUtils.addAll(args, "--disableInternalCommands"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -50,10 +50,10 @@ public class DNSCommands implements CommandMarker {
 		
 		try {
 			if(showAll) {
-				List<String> addresses = client.getAllAddreessesByHost(host, includeHost);
+				List<String> addresses = client.getAllAddressesByHost(host, includeHost);
 				output = addresses.stream().collect(Collectors.joining(System.lineSeparator()));
 			} else {
-				output = client.getAddresseByHost(host, includeHost);
+				output = client.getAddressByHost(host, includeHost);
 			}
 		} catch (UnknownHostException e) {
 			LOGGER.warning(String.format("The specified hostname '%s' wasn't found.", host));

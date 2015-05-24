@@ -3,14 +3,14 @@ package de.htw.vs.server;
 public interface LifeCycle extends AutoCloseable {
 	
 	
-	public void start();
-	public void stop();
-	public boolean isRunning();
+	void start();
+	void stop();
+	boolean isRunning();
 	
 	@Override
-	default public void close() {
+	default void close() {
 		stop();
-	};
+	}
 
-	
+
 }

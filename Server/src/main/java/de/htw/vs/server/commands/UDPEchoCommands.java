@@ -33,7 +33,7 @@ public class UDPEchoCommands implements CommandMarker {
 				client.sendMessage(line);
 				String answer = null;
 				
-				while((answer = client.recvMessage()) != null) {
+				while((answer = client.receiveMessage()) != null) {
 					out.println(answer);
 				}
 			}

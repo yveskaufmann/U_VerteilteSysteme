@@ -44,7 +44,7 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 		}	
 	}
 	
-	public String recvMessage() {
+	public String receiveMessage() {
 		if ( messages.isEmpty() ) return null;
 		try {
 			return new String(answers.take(), MESSAGE_ENCODING);

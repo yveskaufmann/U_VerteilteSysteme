@@ -20,12 +20,11 @@ public class UDPEchoServer extends UDPServer {
 
 			@Override
 			public DatagramPacket onReceived(DatagramPacket packet) {
-				DatagramPacket sendPacket = new DatagramPacket(packet.getData(), packet.getLength(), packet.getSocketAddress());
-				return sendPacket;
+				return new DatagramPacket(packet.getData(), packet.getLength(), packet.getSocketAddress());
 			}
 			
 			@Override
-			public byte[] getRecvBuffer() {
+			public byte[] getReceiveBuffer() {
 				return buffer;
 			}
 		});

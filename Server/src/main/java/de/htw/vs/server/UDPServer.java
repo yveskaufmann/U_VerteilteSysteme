@@ -20,7 +20,7 @@ public class UDPServer extends RunnableLifeCycle {
 	}
 
 	protected void doServerProcessing() {
-		byte[] recvBuffer = worker.getRecvBuffer();
+		byte[] recvBuffer = worker.getReceiveBuffer();
 		try(DatagramSocket ds = new DatagramSocket(port)) {
 			ds.setSoTimeout(timeout);
 			while(isRunning()) {

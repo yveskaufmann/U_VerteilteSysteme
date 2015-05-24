@@ -38,6 +38,6 @@ public class ShellBannerProvider extends DefaultBannerProvider {
 	@Override
 	public String getProviderName() {
 		return SHELL_NAME;
-	};
-		
+	}
+
 }
