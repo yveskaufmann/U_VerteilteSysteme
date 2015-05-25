@@ -1,26 +1,27 @@
 subprojects {
-    
+
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-    
-    sourceCompatibility = 1.8
-    version = '1.0'
-    
+
+    sourceCompatibility = '1.8'
+    version = '1.0.0-SNAPSHOT'
+
     eclipse {
         classpath {
-           downloadSources=true
-           downloadJavadoc=true
+           downloadSources = true
+           downloadJavadoc = true
         }
     }
-    
+
     idea {
         module {
-            downloadJavadoc=true
-            downloadSources=true    
+            downloadJavadoc = true
+            downloadSources = true
+			jdkName='1.8'
         }
     }
-    
+
     repositories {
        maven { url "http://repo.springsource.org/libs-release" }
        mavenCentral()
@@ -36,6 +37,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
+	description = 'Generates gradlew[.bat] scripts'
     gradleVersion = '2.4'
 }
 
