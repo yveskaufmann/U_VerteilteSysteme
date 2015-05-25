@@ -20,6 +20,3 @@ Dropbox.ini
 hs_err_pid*
 *.log
 *.iml
-DNSClient/build
-Server/build
-Shell/build
