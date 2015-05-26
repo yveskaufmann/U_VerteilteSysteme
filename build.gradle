@@ -44,4 +44,17 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
 
+/*
+ * Powered by:
+ * http://gradle.1045684.n5.nabble.com/aggregating-javadocs-td1433469.html
+ */
+task javadoc(type: Javadoc) {
+	source subprojects.collect { project -> project.sourceSets.main.allJava }
+	destinationDir = new File(buildDir, 'javadoc')
+
+	classpath = files(subprojects.collect {project ->
+		project.sourceSets.main.compileClasspath
+	})
+}
+
 
