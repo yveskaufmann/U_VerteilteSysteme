@@ -7,11 +7,19 @@ import org.springframework.shell.support.util.FileUtils;
 import org.springframework.shell.support.util.OsUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * <p>
+ * The ShellBannerProvider is a plugin for the spring shell,
+ * which replace the version banner of the shell.
+ * </p>
+ */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ShellBannerProvider extends DefaultBannerProvider {
-		
-	
+
+	/**
+	 * The name of this shell.
+	 */
 	public static final String SHELL_NAME = "VS-Runner";
 
 	@Override
@@ -21,20 +29,20 @@ public class ShellBannerProvider extends DefaultBannerProvider {
 		banner.append(OsUtils.LINE_SEPARATOR);
 		banner.append(getVersion()).append(OsUtils.LINE_SEPARATOR);
 		banner.append(OsUtils.LINE_SEPARATOR);
-		                                                                                                       
+
 		return banner.toString();
 	}
-	
+
 	@Override
 	public String getVersion() {
 		return "1.0";
 	}
-	
+
 	@Override
 	public String getWelcomeMessage() {
 		return "Welcome to " + getProviderName() + " shell." + OsUtils.LINE_SEPARATOR;
 	}
-	
+
 	@Override
 	public String getProviderName() {
 		return SHELL_NAME;

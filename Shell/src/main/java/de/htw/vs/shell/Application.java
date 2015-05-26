@@ -10,7 +10,9 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-
+/**
+ * The Main application which starts the spring shell.
+ */
 public class Application {
 
 	/**
@@ -25,9 +27,9 @@ public class Application {
 	 * @param args the program arguments.
 	 */
 	public static void run(String[] args)  {
+		setConsoleCodePage();
 		registerAppHomeDirSystemVariable();
 		registerUncaughtExceptionLogger();
-		setConsoleCodePage();
 		runSpringShellWithoutInternalCommands(args);
 	}
 

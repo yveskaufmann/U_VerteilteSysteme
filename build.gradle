@@ -1,3 +1,6 @@
+
+version =  '1.0.0-SNAPSHOT'
+
 subprojects {
 
     apply plugin: 'java'
@@ -5,7 +8,7 @@ subprojects {
     apply plugin: 'idea'
 
     sourceCompatibility = '1.8'
-    version = '1.0.0-SNAPSHOT'
+    version = "${version}"
 
     eclipse {
         classpath {
@@ -44,11 +47,32 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
 
-/*
- * Powered by:
- * http://gradle.1045684.n5.nabble.com/aggregating-javadocs-td1433469.html
- */
+
 task javadoc(type: Javadoc) {
+	description = "Generates aggregated Javadoc API documentation."
+
+	ext.javadocLinks = [
+		"http://docs.oracle.com/javase/8/docs/api/",
+		"http://docs.spring.io/spring/docs/4.0.3.RELEASE/javadoc-api/",
+		"http://docs.spring.io/spring-shell/docs/1.1.0.RELEASE/api/",
+		"http://commons.apache.org/proper/commons-lang/javadocs/api-3.3.2/",
+		"http://jline.github.io/jline2/apidocs/reference/"
+	] as String[]
+
+	title = project.name + " - ${version}"
+	options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
+	options.overview ="doc/overview.html"
+	options.author = true
+	options.header = project.name
+	options.splitIndex = true
+	options.links(ext.javadocLinks)
+	options.addStringOption('Xdoclint:none', '-quiet')
+	maxMemory = "1024m"
+
+	/*
+	 * Powered by:
+	 * http://gradle.1045684.n5.nabble.com/aggregating-javadocs-td1433469.html
+	 */
 	source subprojects.collect { project -> project.sourceSets.main.allJava }
 	destinationDir = new File(buildDir, 'javadoc')
 

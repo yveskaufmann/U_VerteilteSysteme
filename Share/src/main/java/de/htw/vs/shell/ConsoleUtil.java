@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 /**
  * Helper methods for handling console commands,
  * such as reading from the console and so on.
- *
  */
 public class ConsoleUtil {
 
@@ -105,8 +104,8 @@ public class ConsoleUtil {
 	}
 
 	/**
-	 * Check if the jansi implementation is aviable
-	 * @return true if jansi is aviable.
+	 * Check if the jansi implementation is available
+	 * @return true if jansi is available.
 	 */
 	public static boolean isJansiAvailable() {
 		return JANSI_AVAILABLE && OsUtils.isWindows() && System.getProperty("jline.terminal") == null;

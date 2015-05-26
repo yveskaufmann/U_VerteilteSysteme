@@ -5,6 +5,9 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 
+/**
+ * String utility methods.
+ */
 public class StringUtil {
 
 	/**

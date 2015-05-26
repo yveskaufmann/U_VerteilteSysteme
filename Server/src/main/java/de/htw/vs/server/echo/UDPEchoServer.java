@@ -21,7 +21,7 @@ public class UDPEchoServer extends UDPServer {
 	 * <p>
 	 * Create the {@code UDPEchoServer} bind
 	 * to the default port 4242.
-	 * <p>
+	 * </p>
 	 */
 	public UDPEchoServer() {
 		this(DEFAULT_PORT);
@@ -31,7 +31,7 @@ public class UDPEchoServer extends UDPServer {
 	 * <p>
 	 * Create the {@code UDPEchoServer} bind
 	 * to the port {@code port}.
-	 * <p>
+	 * </p>
 	 * @param port the port which should used by this server.
 	 */
 	public UDPEchoServer(int port) {

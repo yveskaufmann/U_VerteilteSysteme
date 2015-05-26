@@ -15,7 +15,7 @@ public interface UDPServerWorker extends AutoCloseable {
 	 * Returns the buffer which should used for storing incoming {@link DatagramPacket}s.
 	 * </p>
 	 *
-	 * @return a byte array of the size > 0.
+	 * @return a byte array of the size &gt; 0.
 	 */
 	byte[] getReceiveBuffer();
 
@@ -31,13 +31,10 @@ public interface UDPServerWorker extends AutoCloseable {
 	 *
 	 * @param packet the received {@link DatagramPacket}.
 	 *
-	 * @return
+	 * @return the {@link DatagramPacket} which should send to the sender.
 	 */
 	DatagramPacket onReceived(final DatagramPacket packet);
 
-	/**
-	 * @see AutoCloseable
-	 * @throws Exception
-	 */
+	@Override
 	default void close() throws Exception {}
 }
