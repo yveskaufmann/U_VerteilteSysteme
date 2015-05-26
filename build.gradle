@@ -28,6 +28,9 @@ subprojects {
     }
 
     dependencies {
+		if (!project.name.equals("Share")) {
+			compile project(':Share')
+		}
         compile 'org.springframework.shell:spring-shell:1.1.0.RELEASE'
         compile 'org.apache.commons:commons-lang3:3.3.2'
         compile 'log4j:log4j:1.2.17'

@@ -1,6 +1,5 @@
 package de.htw.vs.shell;
 
-import de.htw.vs.shell.util.UncaughtExceptionLogger;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.springframework.shell.Bootstrap;

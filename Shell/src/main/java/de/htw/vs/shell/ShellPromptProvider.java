@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ShellPromptProvider extends DefaultPromptProvider {
-	
-	@Autowired
-	private ShellContext ctx;
-	
+
+
 	@Override
 	public String getPrompt() {
 		return ShellBannerProvider.SHELL_NAME + ">";
