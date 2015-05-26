@@ -35,8 +35,8 @@ public class UDPEchoCommands implements CommandMarker {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			server.close();
-			client.close();
+			server.stop();
+			client.stop();
 		}
 	}
 

@@ -12,18 +12,18 @@ import java.util.concurrent.LinkedBlockingDeque;
 import de.htw.vs.server.RunnableLifeCycle;
 
 public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
-	
+
 	private static final String MESSAGE_ENCODING = "UTF-8";
 	private int timeout;
 	private BlockingQueue<byte[]> messages = null;
 	private BlockingQueue<byte[]> answers = null;
 	private InetSocketAddress address = null;
-	
-	
+
+
 	public UDPEchoClient() {
 		this("127.0.0.1", UDPEchoServer.DEFAULT_PORT);
 	}
-	
+
 	public UDPEchoClient(String host, int port) {
 
 		this.timeout = 10;
@@ -32,7 +32,7 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 		address = new InetSocketAddress(host, port);
 		setRunnable(this);
 	}
-	
+
 
 	public void sendMessage(String message) {
 		byte[] messageBuffer;
@@ -41,9 +41,9 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 			messages.put(messageBuffer);
 		} catch (InterruptedException | UnsupportedEncodingException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
-	
+
 	public String receiveMessage() {
 		if ( messages.isEmpty() ) return null;
 		try {
@@ -53,12 +53,12 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 		}
 		return null;
 	}
-	
+
 	public void run() {
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(timeout);
 			while(isRunning()) {
-				
+
 				try {
 					if(!messages.isEmpty()) {
 						byte []message = messages.take();
@@ -72,19 +72,11 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 					continue;
 				}
 			}
-				
+
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }
 
-
-/**
- *
- *
- * 	
- *
- *
- */
