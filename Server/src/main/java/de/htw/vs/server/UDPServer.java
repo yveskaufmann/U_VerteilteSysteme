@@ -1,8 +1,8 @@
 package de.htw.vs.server;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class UDPServer extends RunnableLifeCycle {
@@ -13,7 +13,7 @@ public class UDPServer extends RunnableLifeCycle {
 
 
 	public UDPServer(int port, UDPServerWorker worker) {
-		this.port = port;
+		setPort(port);
 		this.timeout = 1000;
 		this.worker = worker;
 		setRunnable(this::doServerProcessing);
@@ -21,7 +21,7 @@ public class UDPServer extends RunnableLifeCycle {
 
 	protected void doServerProcessing() {
 		byte[] recvBuffer = worker.getReceiveBuffer();
-		try(DatagramSocket ds = new DatagramSocket(port)) {
+		try(DatagramSocket ds = new DatagramSocket(getPort())) {
 			ds.setSoTimeout(timeout);
 			while(isRunning()) {
 				DatagramPacket packet = new DatagramPacket(recvBuffer, recvBuffer.length);
@@ -32,8 +32,6 @@ public class UDPServer extends RunnableLifeCycle {
 				}
 				ds.send(worker.onReceived(packet));
 			}
-		} catch (SocketException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
