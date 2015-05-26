@@ -24,6 +24,14 @@ public class StringUtil {
 		return Stream.generate(()-> str).limit(times).collect(joining());
 	}
 
+	/**
+	 * <p>
+	 * Convert a given exception in to a string.
+	 * </p>
+	 *
+	 * @param ex the exception
+	 * @return the string representation of the given {@link Exception}
+	 */
 	public static String toString(Exception ex) {
 		if(ex instanceof SQLException) {
 			return String.format("Error: connection failed: %s ", ex.getMessage());
@@ -32,12 +40,20 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * <p>Split a string into sub strings(chunks) of the size {@code chunkSize}.</p>
+	 * <p>NOTE: the last found chunk could be smaller then the chunkSize.</p>
+	 *
+	 * @param text the string which should be splitted.
+	 * @param chunkSize the size of each chunk.
+	 * @return An array of sub strings of the size {@code chunkSize}
+	 */
 	public static String[] splitIntoChunks(String text, int chunkSize) {
 		if(text.length() < chunkSize) {
 			return new String[] { text };
 		}
 
-		int countOfChunks = (int )Math.ceil((float)text.length() /  chunkSize);
+		int countOfChunks = (int )Math.ceil((float)text.length() / chunkSize);
 		String[] chunks = new String[countOfChunks];
 		for(int i = 0; i < chunks.length; i++) {
 			int offset = i * chunkSize;
@@ -47,6 +63,5 @@ public class StringUtil {
 		}
 
 		return chunks;
-
 	}
 }

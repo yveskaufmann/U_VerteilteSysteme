@@ -7,6 +7,8 @@ import java.lang.Thread.UncaughtExceptionHandler;
 /**
  * An {@link UncaughtExceptionHandler} which logs all uncaught exceptions
  * to a Logger.
+ *
+ * @see UncaughtExceptionHandler
  */
 public class UncaughtExceptionLogger implements UncaughtExceptionHandler {
 

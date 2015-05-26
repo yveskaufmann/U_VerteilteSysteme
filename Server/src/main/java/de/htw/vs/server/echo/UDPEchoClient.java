@@ -33,7 +33,6 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 		setRunnable(this);
 	}
 
-
 	public void sendMessage(String message) {
 		byte[] messageBuffer;
 		try {
@@ -58,7 +57,6 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(timeout);
 			while(isRunning()) {
-
 				try {
 					if(!messages.isEmpty()) {
 						byte []message = messages.take();
@@ -72,7 +70,6 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 					continue;
 				}
 			}
-
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
