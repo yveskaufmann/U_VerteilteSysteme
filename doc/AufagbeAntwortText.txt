@@ -1,0 +1,7 @@
+
+3.1
+Ein socket ist ein im Arbeitsspeicher reservierter Speicher Bereich der für Kommunikation reserviert ist. In Jasva sind Sockets in java.net packet enthalten. Dort gibt es die Klassen Socket und ServerSocket. Beim Erstellen eines Sockets und Server Sockets muss ein Port übergeben werden. Der Vorteil von Sockets ist eine Platform unabhängige Kommunikation. Dies wird über eine standardisierte Schnittstelle zwischen dem Netzwerkprotokoll des Betriebssystems und der Anwendung Software. Die Verwaltung aller Benutzten Sockets und Verbindungsinformationen übernimmt das Betriebssystem.
+
+3.2. a)
+Wenn ich nichts eingebe (Leerer String) wird die Loop Adresse zurückgegeben.
+Wenn eine Unbekannte Adresse eingegeben wird, wird eine exception geschmissen.
