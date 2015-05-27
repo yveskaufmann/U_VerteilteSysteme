@@ -131,6 +131,7 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 					socket.receive(msgPacket);
 					answers.put(msgPacket.getData());
 				} catch (SocketTimeoutException ex) {
+					notifyObservers("timeout");
 					continue;
 				}
 			}

@@ -1,14 +1,18 @@
 package de.htw.vs.server.commands;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Observable;
+
+import org.springframework.shell.core.CommandMarker;
+import org.springframework.shell.core.annotation.CliCommand;
+import org.springframework.shell.core.annotation.CliOption;
+import org.springframework.stereotype.Component;
+
 import de.htw.vs.server.echo.UDPEchoClient;
 import de.htw.vs.server.echo.UDPEchoServer;
 import de.htw.vs.shell.ConsoleUtil;
-import org.springframework.shell.core.CommandMarker;
-import org.springframework.shell.core.annotation.CliCommand;
-import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.PrintStream;
 
 /**
  * <p>
@@ -28,101 +32,114 @@ import java.io.PrintStream;
  * @see CliCommand
  */
 @Component
-public class UDPEchoCommands implements CommandMarker
-{
+public class UDPEchoCommands implements CommandMarker {
 
 	/**
 	 * This command starts the udp echo server and the client.
 	 *
-	 * @throws IOException a connection problem occurred between client and server
+	 * @throws IOException if a connection problem occurred between client and server
 	 */
 	@CliCommand(value = "udp echo", help = "Starts an echo server and a echo client")
-	public void echoServerAndClient() throws IOException
-	{
+	public void echoServerAndClient() throws IOException {
 		PrintStream out = ConsoleUtil.getConsoleWriter();
 		UDPEchoServer server = new UDPEchoServer();
 		UDPEchoClient client = new UDPEchoClient();
-		try
-		{
+		try {
 			server.start();
 			client.start();
 
 			String line = null;
-			while ((line = ConsoleUtil.readline("Please enter your message: ")) != null)
-			{
+			while (client.isRunning() && (line = ConsoleUtil.readline("Please enter your message: ")) != null) {
 				client.sendMessage(line);
 				String answer = null;
-				while ((answer = client.receiveMessage()) != null)
-				{
+				while ((answer = client.receiveMessage()) != null) {
 					out.println("Server said: " + answer);
 					out.flush();
 				}
 			}
-		} catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally
-		{
+		} finally {
 			server.stop();
 			client.stop();
 		}
 	}
 
 	/**
-	 * This command starts up the udp echo Server
-	 *
-	 * @throws IOException IOException a connection problem occurred between client and server.
+	 * This command starts up the udp echo server.
+	 * 
+	 * @param port the port number which should use by the server.
+	 * @throws IOException if a connection problem occurred between client and server.
 	 */
-	@CliCommand(value = "server", help = "Starts a UDP echo server")
-	public void echoServer() throws IOException
-	{
-		PrintStream out = ConsoleUtil.getConsoleWriter();
-		UDPEchoServer server = new UDPEchoServer();
-		try
-		{
+	@CliCommand(value = "udp server", help = "Starts a UDP echo server")
+	public void echoServer(
+			@CliOption(
+					key = {"", "port"},
+					mandatory=false,
+					unspecifiedDefaultValue="4242",
+					help="The port number which should used by the server."
+			)final short port) throws IOException {
+		
+		UDPEchoServer server = new UDPEchoServer(port);
+		try {
 			server.start();
-			String line = null;
-			while ((line = ConsoleUtil.readline("Press any key to exit: ")) != null)
-			{
-			}
-		} catch (Exception ex)
-		{
+			while ((ConsoleUtil.readline("Press any key to exit: ")) != null) {}
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally
-		{
+		} finally {
 			server.stop();
 		}
 	}
 
 	/**
-	 * This command starts up the udp echo Client
-	 *
+	 * This command starts up the udp echo client and connects to a udp server..
+	 * 
+	 * @param host the name  of the server to which a connection should be established.
+	 * @param port the port number on which the server is listening..
+	 * 
 	 * @throws IOException IOException a connection problem occurred between client and server.
 	 */
-	@CliCommand(value = "client", help = "Starts a UDP echo client")
-	public void echoClient() throws IOException
-	{
+	@CliCommand(value = "udp client", help = "Starts a UDP echo client")
+	public void echoClient(	
+			@CliOption(
+					key = {"", "host"},
+					mandatory=false,
+					unspecifiedDefaultValue="127.0.0.1",
+					help="The hostname of the server to which a connetion should be etablished."
+			)final String host,
+			@CliOption(
+					key = {"-p", "port"},
+					mandatory=false,
+					unspecifiedDefaultValue="4242",
+					help="The port number on which the server is listening."
+			) final short port) throws IOException {
+		
 		PrintStream out = ConsoleUtil.getConsoleWriter();
-		UDPEchoClient client = new UDPEchoClient();
-		try
-		{
+		UDPEchoClient client = new UDPEchoClient(host, port);
+		
+		try {
+			
+			client.addObserver((Observable observable, Object args) -> {
+				if ( "timeout".equals(args)) {
+					ConsoleUtil.getConsoleWriter().print("Timeout the server isn't accessible");
+					client.stop();
+					return;
+				}
+			});
+			
 			client.start();
 			String line = null;
-			while ((line = ConsoleUtil.readline("Please enter your message: ")) != null)
-			{
+			while (client.isRunning() && (line = ConsoleUtil.readline("Please enter your message: ")) != null) {
 				client.sendMessage(line);
 				String answer = null;
-				while ((answer = client.receiveMessage()) != null)
-				{
+				while ((answer = client.receiveMessage()) != null) {
 					out.println("Server said: " + answer);
 					out.flush();
 				}
 			}
-		} catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally
-		{
+		} finally {
 			client.stop();
 		}
 	}

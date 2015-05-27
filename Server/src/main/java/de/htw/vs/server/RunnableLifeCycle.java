@@ -1,5 +1,7 @@
 package de.htw.vs.server;
 
+import java.util.Observable;
+
 import org.springframework.context.SmartLifecycle;
 
 /**
@@ -8,7 +10,7 @@ import org.springframework.context.SmartLifecycle;
  *
  * @see SmartLifecycle
  */
-public class RunnableLifeCycle implements SmartLifecycle {
+public class RunnableLifeCycle extends Observable implements SmartLifecycle {
 
 	private Thread thread;
 	private Runnable runnable;
