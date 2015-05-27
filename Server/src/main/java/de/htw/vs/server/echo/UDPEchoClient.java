@@ -51,6 +51,18 @@ public class UDPEchoClient extends RunnableLifeCycle implements Runnable {
 	}
 
 	/**
+	 * <p>Create the server which conncets to the server at localhost:{@code port}</p>
+	 * @param port the port on which the server is listening.
+	 */
+	public UDPEchoClient(int port){this("127.0.0.1", port);}
+
+	/**
+	 * <p>Create the server which conncets to the server at {@code host}:4242</p>
+	 * @param host the hostname or ip address of the server.
+	 */
+	public UDPEchoClient(String host){this(host, UDPEchoServer.DEFAULT_PORT);}
+
+	/**
 	 * <p>Create the server which conncets to the server at {@code host}:{@code port}</p>
 	 * @param host the hostname or ip address of the server.
 	 * @param port the port on which the server is listening.
