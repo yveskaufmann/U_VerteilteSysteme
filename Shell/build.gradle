@@ -5,6 +5,7 @@ apply plugin: 'application'
 dependencies {
     runtime project(':DNSClient')
     runtime project(':Server')
+	runtime project(':CarPark')
 }
 
 mainClassName = "de.htw.vs.Shell"
