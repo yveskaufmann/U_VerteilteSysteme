@@ -6,7 +6,7 @@ dependencies {
     runtime project(':DNSClient')
     runtime project(':Server')
 	runtime project(':CarPark')
-	runtime project(':SimpleSemaphore')
+	runtime project(':Semaphore')
 }
 
 mainClassName = "de.htw.vs.Shell"

@@ -91,6 +91,16 @@ public class SemaphoreMain
 				doTask(getRandomDuration(50, 100));
 			}
 		};
+
+		// Ensures that the control is only send back to
+		// the shell if all threads are runned.
+		try {
+			t1.join();
+			t2.join();
+			t3.join();
+			t4.join();
+			t5.join();
+		} catch(InterruptedException ex) {}
 	}
 
 }
