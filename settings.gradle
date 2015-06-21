@@ -1,1 +1,1 @@
-include "Shell", "Share", "DNSClient", "Server", "CarPark", "Semaphore"
+include "Shell", "Share", "DNSClient", "Server", "CarPark", "Semaphore", "Chat"
