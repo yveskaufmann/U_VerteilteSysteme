@@ -79,6 +79,7 @@ public class ConsoleUtil {
 			throw new IllegalStateException("Cannot start console class", ioe);
 		}
 		consoleReader.setExpandEvents(false);
+
 		return consoleReader;
 	}
 

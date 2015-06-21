@@ -1,6 +1,8 @@
 package de.htw.vs.shell;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -21,7 +23,10 @@ public class UncaughtExceptionLogger implements UncaughtExceptionHandler {
 
 	private void logException(Thread t, Throwable ex) {
 		String errorMessage = String.format("Exception in thread '%s'",t);
-		Logger.getLogger(getNameOfClassWhichThrowed(ex)).error(errorMessage, ex);
+
+		Logger logger = LoggerFactory.getLogger(getNameOfClassWhichThrowed(ex));
+		logger.error(errorMessage,ex);
+
 	}
 
 	private String getNameOfClassWhichThrowed(Throwable ex) {
