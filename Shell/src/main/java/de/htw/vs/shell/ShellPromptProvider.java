@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ShellPromptProvider extends DefaultPromptProvider {
 
-
 	@Override
 	public String getPrompt() {
 		return ShellBannerProvider.SHELL_NAME + ">";
