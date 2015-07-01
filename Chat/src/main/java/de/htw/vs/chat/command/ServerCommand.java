@@ -24,7 +24,6 @@ public class ServerCommand implements CommandMarker {
 			boolean exit = false;
 			do {
 				String input = null;
-				System.out.println("Type \"exit\" to stop the server");
 				while ((input = ConsoleUtil.readline("")) != null) {
 					exit = "exit".equalsIgnoreCase(input);
 				}

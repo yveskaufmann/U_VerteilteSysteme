@@ -31,9 +31,14 @@ public class ClientCommand implements CommandMarker {
 
 		try {
 
-			ChatClient client = new ChatClient(username, serverHost);
-			client.connect();
 			String message = null;
+			ChatClient client = new ChatClient(username, serverHost);
+
+
+			if (!client.connect()) {
+				return;
+			}
+
 			while ((message = ConsoleUtil.readline("Please enter your message (type \"exit\" to disconnect): ")) != null
 				&& ! "exit".equalsIgnoreCase(message)) {
 				client.sendMessage(message);

@@ -54,8 +54,9 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 	 *
 	 * @throws RemoteException if the connection to the server failed.
 	 * @throws NotBoundException if the IChatServer could not be found inside the rmi registry
+	 * @return true if the connection was successful.
 	 */
-	public void connect() throws RemoteException, NotBoundException {
+	public boolean connect() throws RemoteException, NotBoundException {
 		LOG.info(String.format("'%s' try to connect to the server '%s.", this.nickName, this.serverHost));
 
 		Registry registry = LocateRegistry.getRegistry(this.serverHost);
@@ -63,9 +64,11 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 
 		if (server.connect(this)) {
 			LOG.info(String.format("'%s' connected successfully to '%s'.", this.nickName, this.serverHost));
+			return true;
 		} else {
 			LOG.warn(String.format("'%s' is already connected to '%s'.", this.nickName, this.serverHost));
 		}
+		return  false;
 	}
 
 	/**
