@@ -80,6 +80,7 @@ task javadoc(type: Javadoc) {
 	options.splitIndex = true
 	options.links(ext.javadocLinks)
 	options.addStringOption('Xdoclint:none', '-quiet')
+	failOnError=false
 	maxMemory = "1024m"
 
 	/*

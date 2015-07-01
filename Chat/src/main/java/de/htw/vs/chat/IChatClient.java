@@ -14,7 +14,8 @@ public interface IChatClient extends Remote
 	 *
 	 * @return The name of the client
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException when there is a error while retrieving the the
+	 * username
 	 */
 	String getName() throws RemoteException;
 
@@ -23,7 +24,8 @@ public interface IChatClient extends Remote
 	 *
 	 * @param message The message
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException when there is a error while sending the message
+	 * to the client
 	 */
 	void sendMessageToClient(Message message) throws RemoteException;
 }

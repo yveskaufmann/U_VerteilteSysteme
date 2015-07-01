@@ -18,8 +18,7 @@ import java.util.HashMap;
  * <p>
  * Implementation of the <code>IChatServer</code> interface
  */
-public class ChatServer extends UnicastRemoteObject implements IChatServer
-{
+public class ChatServer extends UnicastRemoteObject implements IChatServer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ChatServer.class);
 	/**
@@ -34,64 +33,64 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer
 	 * The name of the Server
 	 */
 	private String name;
+
+	/**
+	 * The RMI registry
+	 */
 	private Registry registry;
 
 
-	public ChatServer() throws RemoteException
-	{
+	/**
+	 * Creates a new <code>ChatServer</code>.
+	 *
+	 * @throws RemoteException if failed to export object
+	 */
+	public ChatServer() throws RemoteException {
 		this(DEFAULT_SERVER_NAME);
-		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 	}
 
 	/**
 	 * Creates a new <code>ChatServer</code>.
 	 *
-	 * @param name The name of teh Server
+	 * @param name The name of the Server
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException if failed to export object
 	 */
-	public ChatServer(String name) throws RemoteException
-	{
+	public ChatServer(String name) throws RemoteException {
 		super();
 		this.name = name;
 		connectedClients = new HashMap<>();
+		registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 	}
 
 	/**
-	 * Starts the Server
+	 * Starts the Server and register it into the rmi registry.
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException if there was an error while starting the server or the server
+	 * 						   is already bind to the rmi registry
 	 */
-	public void start() throws RemoteException
-	{
+	public void start() throws RemoteException {
 		registry.rebind(name, (IChatServer) this);
 		isRunning = true;
 		LOG.info("Server " + name + " started");
 	}
 
-	public void stop() throws RemoteException, NotBoundException
-	{
+	/**
+	 * Stops the Server and unbind this server from the rmi registry.
+	 *
+	 * @throws RemoteException  if there was an error while stoping the server
+	 * @throws NotBoundException if the there was not already started.
+	 */
+	public void stop() throws RemoteException, NotBoundException {
 		registry.unbind(name);
 		isRunning = false;
 		LOG.info("Server " + name + " stopped");
-
 	}
 
-	/**
-	 * Adds a Client to the Server
-	 *
-	 * @param client The reference to the Client
-	 *
-	 * @return True if the adding was successful
-	 *
-	 * @throws RemoteException
-	 */
 	@Override
-	synchronized public boolean connect(IChatClient client) throws RemoteException
-	{
+	synchronized public boolean connect(IChatClient client) throws RemoteException {
 		String name = client.getName();
-		if (connectedClients.containsKey(name))
-		{
+		if (connectedClients.containsKey(name)) {
 			LOG.info("Client " + name + " cannot connect because another client has the name already");
 			return false;
 		}
@@ -100,38 +99,21 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer
 		return true;
 	}
 
-	/**
-	 * Removes a Client from the Server
-	 *
-	 * @param client The reference to the client
-	 *
-	 * @throws RemoteException
-	 */
+
 	@Override
-	synchronized public void disconnect(IChatClient client) throws RemoteException
-	{
+	synchronized public void disconnect(IChatClient client) throws RemoteException {
 		connectedClients.remove(client.getName());
 		LOG.info("Client " + client.getName() + " removed");
 	}
 
-	/**
-	 * Sends a message to all Clients
-	 *
-	 * @param message The message
-	 *
-	 * @throws RemoteException
-	 */
+
 	@Override
-	synchronized public void broadcastMessage(Message message)
-	{
+	synchronized public void broadcastMessage(Message message) {
 		LOG.info("Broadcasting message from " + message.getUsername() + ": " + message.getText());
-		for (IChatClient client : connectedClients.values())
-		{
-			try
-			{
+		for (IChatClient client : connectedClients.values()) {
+			try {
 				client.sendMessageToClient(message);
-			} catch (RemoteException e)
-			{
+			} catch (RemoteException e) {
 				connectedClients.remove(client);
 			}
 		}

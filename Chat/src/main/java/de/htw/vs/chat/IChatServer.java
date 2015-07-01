@@ -22,7 +22,8 @@ public interface IChatServer extends Remote
 	 *
 	 * @return True if the connection was successful
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException if there was a error while the client tried to
+	 * connect.
 	 */
 	boolean connect(IChatClient client) throws RemoteException;
 
@@ -31,7 +32,8 @@ public interface IChatServer extends Remote
 	 *
 	 * @param client The reference to the client
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException if there was a error while the client tried to
+	 * disconnect
 	 */
 	void disconnect(IChatClient client) throws RemoteException;
 
@@ -40,7 +42,8 @@ public interface IChatServer extends Remote
 	 *
 	 * @param message The message
 	 *
-	 * @throws RemoteException
+	 * @throws RemoteException if there was a error while the server sends a
+	 * message to all connected clients
 	 */
 	void broadcastMessage(Message message) throws RemoteException;
 
