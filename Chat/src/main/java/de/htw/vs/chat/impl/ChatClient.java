@@ -15,10 +15,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  * Created by Niels on 20.06.2015.
- *
+ * <p>
  * The implementation of the <code>IChatClient</code> interface
  */
-public class ChatClient extends UnicastRemoteObject implements IChatClient {
+public class ChatClient extends UnicastRemoteObject implements IChatClient
+{
 
 	private static final Logger LOG = LoggerFactory.getLogger(ChatClient.class);
 
@@ -38,11 +39,13 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 	/**
 	 * Creates an ChatClient
 	 *
-	 * @param nickName The name of the Client
+	 * @param nickName   The name of the Client
 	 * @param serverHost The hostname of the chat server
+	 *
 	 * @throws RemoteException
 	 */
-	public ChatClient(String nickName, String serverHost) throws RemoteException {
+	public ChatClient(String nickName, String serverHost) throws RemoteException
+	{
 		super();
 		this.nickName = nickName;
 		this.serverHost = serverHost;
@@ -55,32 +58,40 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 	 * @throws NotBoundException
 	 * @throws MalformedURLException
 	 */
-	public void connect() throws RemoteException, NotBoundException, MalformedURLException {
+	public void connect() throws RemoteException, NotBoundException, MalformedURLException
+	{
 		LOG.info(String.format("'%s' try to connect to the server '%s.", this.nickName, this.serverHost));
 
 		Registry registry = LocateRegistry.getRegistry(this.serverHost);
 		server = (IChatServer) registry.lookup(IChatServer.DEFAULT_SERVER_NAME);
 
-		if (server.connect(this)) {
+		if (server.connect(this))
+		{
 			LOG.info(String.format("'%s' connected successfully to '%s'.", this.nickName, this.serverHost));
-		} else {
+		} else
+		{
 			LOG.warn(String.format("'%s' is already connected to '%s'.", this.nickName, this.serverHost));
 		}
 	}
 
-	public void disconnect() throws RemoteException {
+	public void disconnect() throws RemoteException
+	{
 		server.disconnect(this);
 		LOG.info(String.format("'%s' disconnected from '%s'.", this.nickName, this.serverHost));
 	}
 
 	/**
 	 * Broadcasts a message to all chat clients
+	 *
 	 * @param message The message
 	 */
-	public void sendMessage(String message) {
-		try {
+	public void sendMessage(String message)
+	{
+		try
+		{
 			server.broadcastMessage(new Message(nickName, message));
-		} catch (RemoteException e) {
+		} catch (RemoteException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -93,7 +104,8 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 	 * @throws RemoteException
 	 */
 	@Override
-	public String getName() throws RemoteException {
+	public String getName() throws RemoteException
+	{
 		return nickName;
 	}
 
@@ -105,7 +117,8 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 	 * @throws RemoteException
 	 */
 	@Override
-	public void sendMessageToClient(Message message) throws RemoteException {
+	public void sendMessageToClient(Message message) throws RemoteException
+	{
 		System.out.println(message);
 	}
 }
