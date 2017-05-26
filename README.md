@@ -1,6 +1,5 @@
 # U_VerteilteSysteme
-Exercises for distributed systems for the university and contains 
-a runner for the exercises called 'Shell'.
+Solutions of exercises from the course "Distributed computing" which are bundled with a Runner called 'Shell'.
 
 # Running the Shell
 	
